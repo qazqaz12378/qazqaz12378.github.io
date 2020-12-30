@@ -1,28 +1,36 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!doctype html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | ModelShowProject</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <script src="TemplateData/UnityProgress.js"></script>
+    <title> | TriLib</title>
+    <meta name="description" content="">
+    
+    <link rel="stylesheet" type="text/css" href="styles/fullscreen.css">
     <script src="Build/UnityLoader.js"></script>
     <script>
-      var unityInstance = UnityLoader.instantiate("unityContainer", "Build/webModel.json", {onProgress: UnityProgress});
-    </script>
-    <script type="text/javascript">
-      function Reset(){
-        var canvas = document.getElementById("#canvas"); 
-        canvas.height= document.documentElement.clientHeight;
-        canvas.width = document.documentElement.clientWidth; 
-      }
+        var unityInstance = UnityLoader.instantiate("gameContainer", "Build/WGL.json", {onProgress: unityProgress});
+        function unityProgress (gameInstance, progress) {
+          if (!gameInstance.progress) {
+            gameInstance.loader = document.getElementById('loader');
+            gameInstance.progress = document.getElementById('progress');
+            gameInstance.loading = document.getElementById('loading');
+            document.dispatchEvent(new CustomEvent('UnityProgressStart'));
+          }
+          gameInstance.progress.style.width = (100 * progress) + '%';
+          if (progress === 1) {
+            document.getElementById('loader').style.display = 'none';
+          }
+        }
     </script>
   </head>
   <body>
-    <body οnlοad="Reset()" οnresize="Reset()">
-      <div class="webgl-content"style="width: 100%; height: 100%" >
-      <div id="gameContainer" style="width: 100%; height: 100%"></div>
+    <div id="loader">
+      <div id="loading" class="loading">Loading</div>
+      <div id="progress" class="progress"></div>
     </div>
-
+    <div id="game">
+      <div id="gameContainer"></div>
+    </div>
+    </div>
+  </body>
 </html>
